@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import type { Router } from 'vue-router'
 
 export interface AnalysisResult {
   url: string
@@ -11,8 +11,7 @@ export interface AnalysisResult {
   scan_time: string
 }
 
-export const useAnalyze = () => {
-  const router = useRouter()
+export const useAnalyze = (router: Router) => {
   const url = ref('')
   const loading = ref(false)
   const error = ref<string | null>(null)
@@ -41,7 +40,21 @@ export const useAnalyze = () => {
 
       result.value = data
     } catch (e: any) {
-      error.value = e.message || e.data?.message || 'Failed to analyze website'
+      // Benutzerfreundliche Fehlermeldungen
+      if (e.statusCode === 400 || e.status === 400) {
+        error.value = 'Invalid website URL. Please check the address and try again.'
+      } else if (e.statusCode === 404 || e.status === 404) {
+        error.value = 'Website not found. Please check if the URL is correct.'
+      } else if (e.statusCode === 500 || e.status === 500 || e.message?.includes('fetch failed')) {
+        error.value = 'Unable to analyze this website. The site might be down or blocking our request.'
+      } else if (e.message?.includes('network') || e.message?.includes('timeout')) {
+        error.value = 'Connection timeout. Please check your internet connection and try again.'
+      } else if (e.data?.statusMessage) {
+        // Verwende die Server-Fehlermeldung, falls verfügbar
+        error.value = e.data.statusMessage
+      } else {
+        error.value = 'Something went wrong while analyzing the website. Please try again.'
+      }
     } finally {
       loading.value = false
     }

@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
         if (!htmlRes.ok) {
             throw createError({
                 statusCode: 400,
-                statusMessage: 'Could not fetch website content',
+                statusMessage: 'Unable to access this website. It might be down or blocking automated requests.',
             })
         }
 
@@ -93,9 +93,21 @@ export default defineEventHandler(async (event) => {
         }
     } catch (error: any) {
         console.error('Analysis error:', error)
+
+        // Benutzerfreundliche Fehlermeldungen
+        let statusMessage = 'Unable to analyze this website. Please try again later.'
+
+        if (error.message?.includes('fetch') || error.message?.includes('ENOTFOUND')) {
+            statusMessage = 'Website not reachable. Please check if the URL is correct.'
+        } else if (error.message?.includes('timeout')) {
+            statusMessage = 'Request timeout. The website took too long to respond.'
+        } else if (error.message?.includes('SSL') || error.message?.includes('certificate')) {
+            statusMessage = 'SSL certificate error. This website might have security issues.'
+        }
+
         throw createError({
             statusCode: 500,
-            statusMessage: error.message || 'Failed to analyze website',
+            statusMessage: statusMessage,
         })
     }
 })
