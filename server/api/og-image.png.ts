@@ -1,14 +1,46 @@
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
+import { analyzeWebsite } from '../utils/analyzeWebsite'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
 
-  // Dynamische Daten aus Query-Parametern
-  const url = query.url as string || null
-  const co2 = query.co2 as string || null
-  const grade = query.grade as string || null
-  const isGreen = query.green === 'true'
+  // Load Inter font from local file system
+  const fontPath = join(process.cwd(), 'server/fonts/Inter-Regular.ttf')
+  const fontData = await readFile(fontPath)
+
+  // Get URL from query parameter
+  const urlParam = query.url as string || null
+
+  // Analyze website if URL is provided
+  let analysisData: { url: string; co2: string; grade: string; isGreen: boolean } | null = null
+
+  if (urlParam) {
+    try {
+      // Get the origin URL dynamically
+      const requestURL = getRequestURL(event)
+      const origin = requestURL.origin
+
+      const result = await analyzeWebsite(urlParam, origin)
+      analysisData = {
+        url: result.url,
+        co2: result.co2_grams.toString(),
+        grade: result.grade,
+        isGreen: result.is_green
+      }
+    } catch (error) {
+      // If analysis fails, don't show data (fall back to general image)
+      console.error('OG Image analysis error:', error)
+    }
+  }
+
+  // Use analyzed data or null
+  const url = analysisData?.url || null
+  const co2 = analysisData?.co2 || null
+  const grade = analysisData?.grade || null
+  const isGreen = analysisData?.isGreen || false
 
   // Farbe basierend auf Grade
   const getGradeColor = (g: string | null) => {
@@ -35,7 +67,7 @@ export default defineEventHandler(async (event) => {
           justifyContent: 'center',
           backgroundColor: '#0f172a',
           backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(30, 41, 59, 0.5) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(30, 41, 59, 0.5) 0%, transparent 50%)',
-          fontFamily: 'system-ui, sans-serif',
+          fontFamily: 'Inter',
           padding: '60px',
         },
         children: [
@@ -50,22 +82,6 @@ export default defineEventHandler(async (event) => {
                 marginBottom: url ? '40px' : '60px',
               },
               children: [
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      width: '56px',
-                      height: '56px',
-                      backgroundColor: '#10b981',
-                      borderRadius: '16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '32px',
-                    },
-                    children: '🌱',
-                  },
-                },
                 {
                   type: 'div',
                   props: {
@@ -219,6 +235,7 @@ export default defineEventHandler(async (event) => {
                             style: {
                               fontSize: '64px',
                               marginBottom: '16px',
+                              color: 'white',
                             },
                             children: isGreen ? '✓' : '✗',
                           },
@@ -279,6 +296,14 @@ export default defineEventHandler(async (event) => {
     {
       width: 1200,
       height: 630,
+      fonts: [
+        {
+          name: 'Inter',
+          data: fontData,
+          weight: 400,
+          style: 'normal',
+        },
+      ],
     }
   )
 

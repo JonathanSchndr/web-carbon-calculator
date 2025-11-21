@@ -6,12 +6,9 @@ export const useMetaTags = (result: Ref<AnalysisResult | null>) => {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://web-carbon-calculator.vercel.app'
 
     if (result.value) {
-      // Dynamisches OG-Image mit Analyse-Daten
+      // Dynamisches OG-Image - nur URL übergeben, Backend analysiert selbst
       const params = new URLSearchParams({
         url: result.value.url,
-        co2: result.value.co2_grams.toString(),
-        grade: result.value.grade,
-        green: result.value.is_green.toString(),
       })
       return `${baseUrl}/api/og-image.png?${params.toString()}`
     }
