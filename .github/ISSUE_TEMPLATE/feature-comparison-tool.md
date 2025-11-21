@@ -248,6 +248,6 @@ performance to others, making the decision clear.
   - Add compared sites to Leaderboard
 
 ## Related Features
-- #X (Leaderboard) - use comparison data to populate rankings
-- #X (Historical Tracking) - compare a site's progress over time
-- #X (Dynamic Recommendations) - identify best practices from top performers
+- Leaderboard feature - use comparison data to populate rankings
+- Historical Tracking feature - compare a site's progress over time
+- Dynamic Recommendations feature - identify best practices from top performers

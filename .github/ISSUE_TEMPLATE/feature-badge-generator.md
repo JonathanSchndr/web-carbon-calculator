@@ -127,21 +127,21 @@ Currently, there's no easy way to display carbon calculator results on external 
 
 **Simple HTML Badge:**
 ```html
-<a href="https://carbon-calculator.app/verify/example.com">
-  <img src="https://carbon-calculator.app/badge/example.com.svg" 
+<a href="https://{YOUR_DOMAIN}/verify/example.com">
+  <img src="https://{YOUR_DOMAIN}/badge/example.com.svg" 
        alt="Eco Grade A+" />
 </a>
 ```
 
 **Markdown (GitHub README):**
 ```markdown
-[![Eco Grade A+](https://carbon-calculator.app/badge/example.com.svg)](https://carbon-calculator.app/verify/example.com)
+[![Eco Grade A+](https://{YOUR_DOMAIN}/badge/example.com.svg)](https://{YOUR_DOMAIN}/verify/example.com)
 ```
 
 **JavaScript Widget:**
 ```html
 <div id="carbon-widget"></div>
-<script src="https://carbon-calculator.app/widget.js" 
+<script src="https://{YOUR_DOMAIN}/widget.js" 
         data-url="example.com" 
         data-theme="light"
         data-size="medium"></script>
@@ -149,7 +149,7 @@ Currently, there's no easy way to display carbon calculator results on external 
 
 **Dynamic Badge URL:**
 ```
-https://carbon-calculator.app/badge/example.com.svg?style=flat&label=Eco%20Score
+https://{YOUR_DOMAIN}/badge/example.com.svg?style=flat&label=Eco%20Score
 ```
 
 ### Technical Considerations
@@ -287,6 +287,6 @@ Style: social
   - Custom brand integration (white-label badges)
 
 ## Related Features
-- #X (Leaderboard) - "Top 100" achievement badges
-- #X (Historical Tracking) - Progress/improvement badges
-- #X (Verification) - Trust and authenticity system
+- Leaderboard feature - "Top 100" achievement badges
+- Historical Tracking feature - Progress/improvement badges
+- Future verification system - Trust and authenticity for badges

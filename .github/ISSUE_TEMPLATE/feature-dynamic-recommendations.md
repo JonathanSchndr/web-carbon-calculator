@@ -166,6 +166,6 @@ Difficulty: Easy | Time: 30 mins - 2 hours
 - Integration with project management tools (Jira, Trello) to create tasks
 
 ## Related Features
-- #X (Historical Tracking) - track which recommendations were most effective
-- #X (Leaderboard) - highlight sites that improved most
+- Historical Tracking feature - track which recommendations were most effective
+- Leaderboard feature - highlight sites that improved most
 - Could enable "Expert Mode" with advanced technical recommendations

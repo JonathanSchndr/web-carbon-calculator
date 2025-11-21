@@ -234,6 +234,6 @@ CO2 per Visit (grams)
   - "You're in the top 10% of improving sites!"
 
 ## Related Features
-- #X (Leaderboard) - show ranking changes over time
-- #X (Dynamic Recommendations) - track which recommendations led to improvements
-- #X (Badge Generator) - "Reduced carbon by 50% in 6 months" badges
+- Leaderboard feature - show ranking changes over time
+- Dynamic Recommendations feature - track which recommendations led to improvements
+- Badge Generator feature - "Reduced carbon by 50% in 6 months" badges

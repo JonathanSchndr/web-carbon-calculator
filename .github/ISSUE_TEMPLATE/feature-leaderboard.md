@@ -84,5 +84,5 @@ Currently, users can only analyze individual websites without context of how the
 - Consider rate limiting to prevent abuse
 
 ## Related Features
-- #X (Historical Tracking) - could show how rank changed over time
-- #X (Badge Generator) - winners could display "Top 100" badges
+- Historical Tracking feature - could show how rank changed over time
+- Badge Generator feature - winners could display "Top 100" badges
