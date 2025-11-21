@@ -1,15 +1,12 @@
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { analyzeWebsite } from '../utils/analyzeWebsite'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
 
-  // Load Inter font from local file system
-  const fontPath = join(process.cwd(), 'server/fonts/Inter-Regular.ttf')
-  const fontData = await readFile(fontPath)
+  // Load Inter font from server assets (works on Vercel)
+  const fontData = await useStorage('assets:server').getItemRaw('fonts/Inter-Regular.ttf')
 
   // Get URL from query parameter
   const urlParam = query.url as string || null
