@@ -4,7 +4,20 @@ import type { AnalysisResult } from './useAnalyze'
 export const useMetaTags = (result: Ref<AnalysisResult | null>) => {
   const ogImage = computed(() => {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://web-carbon-calculator.vercel.app'
-    return `${baseUrl}/favicon.svg`
+
+    if (result.value) {
+      // Dynamisches OG-Image mit Analyse-Daten
+      const params = new URLSearchParams({
+        url: result.value.url,
+        co2: result.value.co2_grams.toString(),
+        grade: result.value.grade,
+        green: result.value.is_green.toString(),
+      })
+      return `${baseUrl}/api/og-image.png?${params.toString()}`
+    }
+
+    // Allgemeines OG-Image ohne Daten
+    return `${baseUrl}/api/og-image.png`
   })
 
   const ogTitle = computed(() => {
