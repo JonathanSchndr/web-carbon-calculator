@@ -27,13 +27,29 @@ onMounted(async () => {
     <HeroSection />
 
     <!-- Input Form -->
-    <InputForm
-      v-model:url="url"
-      :loading="loading"
-      :error="error"
-      :auto-focus="true"
-      @submit="analyzeUrl"
-    />
+    <ClientOnly>
+      <InputForm
+        v-model:url="url"
+        :loading="loading"
+        :error="error"
+        :auto-focus="true"
+        @submit="analyzeUrl"
+      />
+      <template #fallback>
+        <div class="max-w-xl mx-auto mb-20">
+          <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-2xl blur opacity-20"></div>
+            <div class="relative flex items-center bg-white rounded-2xl shadow-xl p-2 border border-slate-100">
+              <div class="pl-4 text-slate-400">
+                <div class="w-5 h-5"></div>
+              </div>
+              <div class="flex-1 h-12"></div>
+              <div class="bg-slate-900 text-white px-6 h-12 rounded-xl w-28"></div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </ClientOnly>
 
     <!-- Loading State -->
     <LoadingState v-if="loading" />
