@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@tgwf/co2": "^0.16.9",
-    "@vercel/og": "^0.8.5",
     "lucide-vue-next": "^0.554.0",
     "nuxt": "^4.2.1",
     "vue": "^3.5.24",
